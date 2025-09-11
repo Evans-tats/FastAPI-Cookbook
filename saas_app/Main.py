@@ -5,12 +5,14 @@ from fastapi import FastAPI,status, Depends, HTTPException
 from . import db_connection, db_model, operations, Schema
 from sqlalchemy.orm import Session
 
+from . import security,premium_acces
 # from .operations import add_user
 # from Schema import showUserSchema, UserSchema 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    db_model.Base.metadata.drop_all(db_connection.engine)
     db_model.Base.metadata.create_all(db_connection.engine)
     yield 
 
@@ -25,3 +27,15 @@ def register_user(User : Schema.UserSchema, session : Session = Depends(db_conne
             detail="Username or Email already registered"
         )
     return Schema.showUserSchema.model_validate(user)
+
+# @app.get("/users/{username}", response_model=Schema.showUserSchema)
+# def get_user(username: str, session: Session = Depends(db_connection.get_db)):
+#     user = operations.get_user(session, username)
+#     if not user:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="User not found"
+#         )
+#     return user
+app.include_router(security.router)
+app.include_router(premium_acces.router)
