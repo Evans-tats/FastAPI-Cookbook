@@ -13,6 +13,6 @@ class showUserSchema(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-class registerResponseSchema(BaseModel):
+class MessageResponseSchema(BaseModel):
     message: str
     user: showUserSchema

@@ -4,11 +4,11 @@ from sqlalchemy.orm import Session
 from .operations import add_user
 from .db_connection import get_db
 from. db_model import Role
-from . Schema import showUserSchema, UserSchema, registerResponseSchema
+from . Schema import showUserSchema, UserSchema, MessageResponseSchema
 router = APIRouter()
 
-@router.post("/register/premium-user/", status_code=status.HTTP_201_CREATED, response_model=registerResponseSchema)
-def register_premiuim_user( user : UserSchema, session : Session = Depends(get_db)) -> registerResponseSchema:
+@router.post("/register/premium-user/", status_code=status.HTTP_201_CREATED, response_model=MessageResponseSchema)
+def register_premiuim_user( user : UserSchema, session : Session = Depends(get_db)) -> MessageResponseSchema:
     user.role=Role.premium.value
     user = add_user(session, user)
     if not user:
