@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from fastapi import Depends, HTTPException, status, requests
+from fastapi import Depends, HTTPException, status, Request
 from schema import itemschema, responseitemschema
 from sqlalchemy.orm import Session
+from app_logging import client_logger
 
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy import Column, Integer, String, create_engine
@@ -49,3 +50,12 @@ def get_item(item_id: int, session: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
     return responseitemschema.model_validate(item_db)
 
+@app.middleware("http")
+async def log_requests(request : Request, call_next):
+    client_logger.info(
+        f"method : {request.method}, "
+        f"call : {request.url.path}, "
+        f"ip : {request.client.host}"
+    )
+    response = await call_next(request)
+    return response

@@ -4,5 +4,6 @@ class itemschema(BaseModel):
     color: str
 
 class responseitemschema(itemschema):
-    class Config:
+    id: int
+    class Config: 
         from_attributes = True
