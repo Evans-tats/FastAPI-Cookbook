@@ -13,3 +13,6 @@ __pycache__/
 
 
 git-credential-manager/
+*.coverage
+*.db
+:memory
