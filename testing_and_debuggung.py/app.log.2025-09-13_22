@@ -1,0 +1,5 @@
+time: 2025-09-13 22:50:38 | level: INFO | message: method : GET, call : /docs, ip : 127.0.0.1
+time: 2025-09-13 22:50:39 | level: INFO | message: method : GET, call : /openapi.json, ip : 127.0.0.1
+time: 2025-09-13 22:50:59 | level: INFO | message: method : GET, call : /items/10, ip : 127.0.0.1
+time: 2025-09-13 22:51:13 | level: INFO | message: method : GET, call : /items/2, ip : 127.0.0.1
+time: 2025-09-13 22:51:21 | level: INFO | message: method : GET, call : /items/1, ip : 127.0.0.1
