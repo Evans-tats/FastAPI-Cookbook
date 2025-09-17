@@ -52,27 +52,27 @@ async def get_ticket(ticket_id : int, db_session : AsyncSession):
         return None
     return ticket
 
-# async def update_price_of_ticket(ticket_id : int, new_price : float, db_session : AsyncSession):
-#     result = await get_ticket(ticket_id, db_session)
-#     if result is None:
-#         return None
-#     query = (
-#     update(Ticket)
-#     .where(Ticket.id == ticket_id)
-#     .values(price=new_price)
-#     .execution_options(synchronize_session="fetch")
-# )
-#     async with db_session.begin():
-#         ticket_update = await db_session.execute(query)
+async def update_price_of_ticket(ticket_id : int, new_price : float, db_session : AsyncSession):
+    result = await get_ticket(ticket_id, db_session)
+    if result is None:
+        return None
+    query = (
+    update(Ticket)
+    .where(Ticket.id == ticket_id)
+    .values(price=new_price)
+    .execution_options(synchronize_session="fetch")
+)
+    async with db_session.begin():
+        ticket_update = await db_session.execute(query)
 
-#     if ticket_update.rowcount == 0:
-#         return False
-#     return True
+    if ticket_update.rowcount == 0:
+        return False
+    return True
 
-# async def delete_ticket(ticket_id :int, db_session :AsyncSession):
-#     query = (delete(Ticket).where(Ticket.id == ticket_id))
-#     async with db_session.begin():
-#         result = await db_session.execute(query)
-#     if result.rowcount == 0:
-#         return False
-#     return True
+async def delete_ticket(ticket_id :int, db_session :AsyncSession):
+    query = (delete(Ticket).where(Ticket.id == ticket_id))
+    async with db_session.begin():
+        result = await db_session.execute(query)
+    if result.rowcount == 0:
+        return False
+    return True
